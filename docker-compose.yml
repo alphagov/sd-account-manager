@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - sdaccmandb:/data/db
+    networks:
+      - sdaccman
+
+  server:
+    build: ./server
+    networks:
+      - sdaccman
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules/
+    ports:
+      - 5060:5060
+    depends_on:
+      - db
+    command: ['nodemon', 'index.js']
+
+networks: sdaccman:
+volumes: sdaccmandb:
