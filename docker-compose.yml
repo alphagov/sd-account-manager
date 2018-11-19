@@ -22,6 +22,6 @@ services:
     command: ['nodemon', 'index.js']
 
 networks:
-  ? sdaccman
+  sdaccman:
 volumes:
-  ? sdaccmandb
+  sdaccmandb:
