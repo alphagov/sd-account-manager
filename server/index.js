@@ -2,16 +2,18 @@ const express = require('express');
 const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const models = require('./models');
 
 const cookieSession = require('cookie-session');
 const bodyParser = require('body-parser');
 
 const keys = require('./config/keys');
+const schema = require('./schema/schema');
 
 const morgan = require('morgan');
 
-require('./models/tech');
-require('./services/passport');
+// require('./models/tech');
+// require('./services/passport');
 
 // connect to db
 mongoose
@@ -42,6 +44,7 @@ app.use(
 app.use(
   '/graphql',
   expressGraphQL({
+    schema,
     graphiql: true
   })
 );

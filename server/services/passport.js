@@ -6,6 +6,7 @@ const axios = require('axios');
 const keys = require('../config/keys');
 
 const Tech = mongoose.model('techs');
+
 const sessionURI = keys.whdURI + 'Session';
 
 passport.serializeUser((user, done) => {
