@@ -12,9 +12,6 @@ const schema = require('./schema/schema');
 
 const morgan = require('morgan');
 
-// require('./models/tech');
-// require('./services/passport');
-
 // connect to db
 mongoose
   .connect(
