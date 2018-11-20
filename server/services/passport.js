@@ -22,15 +22,16 @@ passport.deserializeUser((id, done) => {
 
 passport.use(
   'whd',
-  new CustomStrategy(async (req, done) => {
+  new CustomStrategy(async (user, done) => {
+    const { username, password } = user.body;
     const response = await axios.get(sessionURI, {
       params: {
-        username: req.query.username,
-        password: req.query.password
+        username,
+        password
       }
     });
     if (response.data) {
-      // console.log(response.data);
+      console.log(response.data);
       // if we get a valid response find them in the database
       const existingTech = await Tech.findOne({
         techId: response.data.currentTechId
@@ -51,3 +52,17 @@ passport.use(
     }
   })
 );
+
+function login({ username, password, req }) {
+  return new Promise((resolve, reject) => {
+    passport.authenticate('whd', (err, user) => {
+      if (!user) {
+        reject('Invalid credentials.');
+      }
+
+      req.login(user, () => resolve(user));
+    })({ body: { username, password } });
+  });
+}
+
+module.exports = { login };

@@ -23,7 +23,7 @@ mongoose
   )
   .then(
     () => {
-      console.log('Database conenction successful');
+      console.log('Database connection successful');
     },
     (err) => {
       console.log(err);
@@ -32,6 +32,7 @@ mongoose
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(
   cookieSession({
@@ -41,6 +42,10 @@ app.use(
   })
 );
 
+// passport for authentication
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(
   '/graphql',
   expressGraphQL({
@@ -48,11 +53,6 @@ app.use(
     graphiql: true
   })
 );
-
-// passport for authentication
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(morgan('dev'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
