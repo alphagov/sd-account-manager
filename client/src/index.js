@@ -7,9 +7,10 @@ import * as serviceWorker from './serviceWorker';
 import App from './components/App';
 
 const client = new ApolloClient({
-  dataIdFromObject: (o) => o.id,
-  uri: '/graphql',
-  opts: { credentials: 'same-origin' }
+  uri: 'http://localhost:5060/graphql',
+  fetchOptions: {
+    credentials: 'same-origin'
+  }
 });
 
 ReactDOM.render(
